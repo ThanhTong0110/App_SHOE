@@ -144,15 +144,15 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           decoration: BoxDecoration(
-                                            color: AppColors.blueColor,
+                                            color: AppColors.greenColor,
                                             borderRadius: BorderRadius.all(
                                               Radius.circular(10),
                                             ),
                                             boxShadow: [
                                               BoxShadow(
                                                 color: Colors.black12,
-                                                spreadRadius: 1,
-                                                blurRadius: 10,
+                                                spreadRadius: 10,
+                                                blurRadius: 15,
                                               ),
                                             ],
                                           ),
