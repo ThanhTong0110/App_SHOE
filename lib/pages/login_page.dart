@@ -1,5 +1,6 @@
 
 import 'package:app_shoe/core/const.dart';
+import 'package:app_shoe/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,13 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _success;
   String _userEmail;
+
+  @override
+  void initState() {
+    _email.text='';
+    _pass.text='';
+    super.initState();
+  }
 
 
   @override
@@ -33,7 +41,7 @@ class _LoginState extends State<Login> {
             Center(
               child: Container(
                 width: 350,
-//                padding: EdgeInsets.symmetric(vertical: 100),
+                padding: EdgeInsets.symmetric(vertical: 100),
                 child: Image.asset('assets/1.png'),
               ),
             ),
@@ -75,6 +83,7 @@ class _LoginState extends State<Login> {
 //              ),
 //            ),
             Container(
+              padding: EdgeInsets.symmetric(horizontal: 20),
               child: Column(
                 children: <Widget>[
                   TextFormField(
@@ -115,10 +124,23 @@ class _LoginState extends State<Login> {
                     child: FlatButton(
                       padding: EdgeInsets.symmetric(vertical: 15),
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                      child: Text('SignIn',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),),
+                      color: AppColors.yellowColor,
+                      onPressed: () {
+                        _signIn();
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 50),
+                  Container(
+                    width: double.infinity,
+                    child: FlatButton(
+                      padding: EdgeInsets.symmetric(vertical: 15),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                       child: Text('SignUp',style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Colors.white),),
                       color: AppColors.yellowColor,
                       onPressed: () {
-                        _signup();
+                        _signUp();
                       },
                     ),
                   ),
@@ -136,7 +158,7 @@ class _LoginState extends State<Login> {
   }
   final FirebaseAuth _auth=FirebaseAuth.instance;
 
-  void _signup() async{
+  void _signUp() async{
     final FirebaseUser user=(await _auth.createUserWithEmailAndPassword(email: _email.text, password: _pass.text)).user;
     if(user !=null){
       setState(() {
@@ -149,6 +171,11 @@ class _LoginState extends State<Login> {
         _success=false;
       });
     }
+  }
+
+  void _signIn() async{
+    final FirebaseUser user=(await _auth.signInWithEmailAndPassword(email: _email.text, password: _pass.text)).user;
+    Navigator.of(context).push(MaterialPageRoute(builder: (_)=>HomePage(user: user)));
   }
 }
 

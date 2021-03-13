@@ -1,5 +1,6 @@
 import 'package:app_shoe/models/firestore_service.dart';
 import 'package:app_shoe/widgets/app_clipper.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:app_shoe/core/const.dart';
 import 'package:app_shoe/core/flutter_icons.dart';
@@ -10,6 +11,9 @@ import 'dart:math' as math;
 import '../models/shoe_model.dart';
 
 class HomePage extends StatefulWidget {
+  final FirebaseUser user;
+
+  const HomePage({Key key, this.user}) : super(key: key);
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -31,6 +35,7 @@ class _HomePageState extends State<HomePage> {
             onPressed: ()=>Scaffold.of(context).openDrawer(),
           ),
         ),
+        title: Text(widget.user.email,style: TextStyle(color: Colors.black),),
       ),
       body: ListView(
         children: <Widget>[
